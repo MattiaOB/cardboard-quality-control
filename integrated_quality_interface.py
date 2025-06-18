@@ -505,20 +505,38 @@ class IntegratedQualityInterface:
 
 
 def launch_integrated_interface():
-    """Launch the integrated interface"""
+    """Launch the integrated interface for Hugging Face Spaces"""
+    import os
+
     # Initialize interface
     interface_manager = IntegratedQualityInterface()
 
-    # Create and launch interface
+    # Create interface
     interface = interface_manager.create_interface()
 
-    interface.launch(
-        server_name="127.0.0.1",
-        server_port=7860,
-        share=False,
-        debug=False,
-        show_error=True
-    )
+    # Check if running on Hugging Face Spaces
+    is_hf_space = os.getenv("SPACE_ID") is not None
+
+    if is_hf_space:
+        # Configuration for Hugging Face Spaces
+        interface.launch(
+            server_name="0.0.0.0",
+            server_port=7860,
+            share=False,
+            debug=False,
+            show_error=True,
+            quiet=False,
+            show_api=False
+        )
+    else:
+        # Configuration for local development
+        interface.launch(
+            server_name="127.0.0.1",
+            server_port=7860,
+            share=False,
+            debug=False,
+            show_error=True
+        )
 
 
 if __name__ == "__main__":
