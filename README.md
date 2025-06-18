@@ -1,15 +1,3 @@
----
-title: Cardboard Quality Control System
-emoji: 📦
-colorFrom: blue
-colorTo: green
-sdk: gradio
-sdk_version: 4.44.0
-app_file: app.py
-pinned: false
-license: apache-2.0
----
-
 # Cardboard Quality Control System
 
 A comprehensive quality control system for cardboard inspection using computer vision and machine learning techniques. This project was developed as part of the **Advanced Measurement Systems for Control Applications** course at Politecnico di Milano.
