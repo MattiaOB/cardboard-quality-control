@@ -8,44 +8,55 @@ import sys
 # Add project root to Python path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
+print("===== Application Startup =====")
+
 try:
-    # Import the main interface
+    # Try to import and launch the main interface
+    print("Loading main interface...")
     from integrated_quality_interface import launch_integrated_interface
 
-    if __name__ == "__main__":
-        # Launch the integrated interface
-        launch_integrated_interface()
+    launch_integrated_interface()
+
+except ImportError as e:
+    print(f"Import error: {e}")
+    # Create a minimal working interface
+    import gradio as gr
+
+    with gr.Blocks(title="Import Error") as demo:
+        gr.Markdown(f"""
+        # ❌ Module Import Error
+
+        Could not import required modules: {str(e)}
+
+        This is likely due to missing dependencies or file structure issues.
+        """)
+
+    demo.launch(server_name="0.0.0.0", server_port=7860)
 
 except Exception as e:
-    print(f"Error launching application: {e}")
+    print(f"Startup error: {e}")
     import traceback
 
     traceback.print_exc()
 
-    # Fallback: Create a simple error page
+    # Create error interface
     import gradio as gr
 
+    with gr.Blocks(title="Startup Error") as demo:
+        gr.Markdown(f"""
+        # ⚠️ Application Startup Error
 
-    def error_interface():
-        with gr.Blocks(title="Error") as demo:
-            gr.Markdown(f"""
-            # ❌ Application Error
+        **Error details:**
+        ```
+        {str(e)}
+        ```
 
-            Sorry, there was an error loading the cardboard quality control system.
+        **Project Info:**
+        - Course: Advanced Measurement Systems for Control Applications
+        - Institution: Politecnico di Milano
+        - Students: Mattia Ogliar Badessi, Luca Molettieri
 
-            **Error details:**
-            ```
-            {str(e)}
-            ```
+        Please check the logs for more details.
+        """)
 
-            Please check the logs or contact the developers.
-            """)
-        return demo
-
-
-    error_app = error_interface()
-    error_app.launch(
-        server_name="0.0.0.0",
-        server_port=7860,
-        show_error=True
-    )
+    demo.launch(server_name="0.0.0.0", server_port=7860)

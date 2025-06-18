@@ -13,7 +13,7 @@ scikit-learn==1.4.1.post1
 transformers==4.38.2
 
 # GUI Interface
-gradio==5.34.0
+gradio==4.36.0
 
 # Plotting and Visualization
 matplotlib==3.8.3

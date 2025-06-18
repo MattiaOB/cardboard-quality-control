@@ -508,33 +508,45 @@ def launch_integrated_interface():
     """Launch the integrated interface for Hugging Face Spaces"""
     import os
 
-    # Initialize interface
-    interface_manager = IntegratedQualityInterface()
+    try:
+        # Initialize interface
+        interface_manager = IntegratedQualityInterface()
 
-    # Create interface
-    interface = interface_manager.create_interface()
+        # Create interface
+        interface = interface_manager.create_interface()
 
-    # Check if running on Hugging Face Spaces
-    is_hf_space = os.getenv("SPACE_ID") is not None
-
-    if is_hf_space:
-        # Configuration for Hugging Face Spaces
+        # Simplified launch configuration for HF Spaces
         interface.launch(
             server_name="0.0.0.0",
             server_port=7860,
-            share=False,
-            debug=False,
             show_error=True,
-            quiet=False,
-            show_api=False
-        )
-    else:
-        # Configuration for local development
-        interface.launch(
-            server_name="127.0.0.1",
-            server_port=7860,
             share=False,
-            debug=False,
+            quiet=False
+        )
+
+    except Exception as e:
+        print(f"Error launching main interface: {e}")
+        import traceback
+        traceback.print_exc()
+
+        # Create fallback interface
+        import gradio as gr
+
+        def create_fallback_interface():
+            with gr.Blocks(title="Demo Unavailable") as demo:
+
+                with gr.Row():
+                    gr.Image(
+                        "https://via.placeholder.com/400x300/blue/white?text=Cardboard+QC+Demo",
+                        label="Demo Preview",
+                        interactive=False
+                    )
+            return demo
+
+        fallback_app = create_fallback_interface()
+        fallback_app.launch(
+            server_name="0.0.0.0",
+            server_port=7860,
             show_error=True
         )
 
