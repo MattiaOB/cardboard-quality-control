@@ -47,7 +47,3 @@ This system performs automated quality control inspection of cardboard pieces th
 **Course**: Advanced Measurement Systems for Control Applications
 **Institution**: Politecnico di Milano
 **Academic Year**: 2024-2025
-
-## 📄 License
-
-This project is licensed under the Apache 2.0 License.

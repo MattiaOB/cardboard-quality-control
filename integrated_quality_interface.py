@@ -518,10 +518,11 @@ def launch_integrated_interface():
         # Simplified launch configuration for HF Spaces
         interface.launch(
             server_name="0.0.0.0",
-            server_port=7860,
-            show_error=True,
+            server_port=7861,
             share=False,
-            quiet=False
+            debug=False,
+            show_error=True,
+            enable_queue=True
         )
 
     except Exception as e:
@@ -546,7 +547,7 @@ def launch_integrated_interface():
         fallback_app = create_fallback_interface()
         fallback_app.launch(
             server_name="0.0.0.0",
-            server_port=7860,
+            server_port=7861,
             show_error=True
         )
 
